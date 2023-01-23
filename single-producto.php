@@ -1,3 +1,5 @@
+<!--En la jerarquía wordpress, esta será la plantilla seleccionada para mostrar las entradas o posts o "los ejemplares" (Comillas nuestras) de la categoría (o term [también puede ser etiqueta]) creada. Esta plantilla en particular se diferencia de la single (en primer lugar) en que no contiene los enlaces de navegación inferiores-->
+
 <?php get_header(); ?>
     <main class='container my-3'>
         <?php if(have_posts()){
@@ -17,6 +19,9 @@
                         <?php the_content();?>
                     </div>
                 </div>
+
+                <!--Loop para visualizar productos relacionados-->
+                <!--Array para filtrar resultados-->
                 <?php  $args=array(
                     'post_type' => 'producto',
                     'posts_per_page' => 6,
@@ -30,8 +35,9 @@
                         )   
                     )
                 );
-                $productos=new WP_Query($args);
-                if($productos->have_posts()){
+                //Loop sobre los productos
+                $productos=new WP_Query($args); //$productos como objeto
+                if($productos->have_posts()){ //$productos como objeto al que le aplicamos el método have_posts()
                     ?>
                     <div class="row justify-content-center text-center my-5 productos-relacionados">
                         <div class="col-12">

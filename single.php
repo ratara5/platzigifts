@@ -18,7 +18,10 @@
                     <!--12 es el peso máximo de una columna (ocupa todo el ancho de contenedor). Luego 6 quiere significar el 50% del ancho del contenedor)-->
                 </div>
                 <!--Recordar cambiar el formato del enlace en Ajustes/Enlaces_permanentes-->
+
+                <!--A, continuación la plantilla para mejorar la navegabilidad del sitio-->
                 <?php get_template_part('template-parts/post','navigation'); ?>
+                <!-- Primer parámetro es la carpeta donde está el archivo. Segundo parámetro es el nombre del archivo-->
                 <?php
             }
         }?>

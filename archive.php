@@ -4,8 +4,9 @@
 <div class="container my-4">
     <div class="row">
         <div class="col-12 text-center">
-            <h1><?php the_archive_title(); ?></h1>
+            <h1><?php the_archive_title(); ?></h1> <!--Este será el nombre del term (Categoría o Etiqueta)-->
         </div>
+        <!--Loop para los post del term-->
         <?php if(have_posts()){
             while(have_posts()){
                 the_post();
@@ -22,5 +23,6 @@
         ?>
     </div>
 </div>
+<!--Cada term categoría ya se incluye como opción para agregar al menú dentro de la opción 'Categorías' -->
 
 <?php get_footer(); ?>
