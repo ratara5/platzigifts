@@ -90,16 +90,18 @@ function productos_type(){
         'rewrite' => true,
         'show_in_rest' => true
    ); //La clave 'supports' hace referencia a qué puede hacer o qué opciones que puede tener el custom post type ('revisions' permite que cada vez que se guarde una entrada del custom post type, tengamos un historial de cambios para reversar, por ejemplo). 'show in menu' permite que en las opciones de menú (del administrador?) podamos agregar las páginas que tengamos creadas del custom post type. 'publicy_queryable' permite que se pueda traer una entrada del custom post type con un custom query. 'rewrite' permite que el custom_post_type tenga una url asignada para que se pueda navegar así como se puede con las entradas. 'show_in_rest' para que los datos del custom_post_type pertenezcan al API.
-   //Función para crear un custom post type.
+   //Función de wordpress para crear un custom post type.
     register_post_type('producto',$args); //Primer argumento es el nombre del custom post type (se recomienda que sea en singular). El segundo argumento es el array de datalles, configuraciones o características del custom post type.
 
 }
 
 add_action('init', 'productos_type'); //El hook para agregar la acción definida por la función anterior. El momento de agregarse la acción es en el init. init es despues del after_setup_theme
 
-//Después de esto se puede crear la entrada del custom post type y se deben REFRESCAR LOS ENLACES PERMANENTES para poder visualizarla<- Esto último refresca el htaccess para poder visualizar
+//Después de esto se puede crear la entrada del custom post type y se deben REFRESCAR LOS ENLACES PERMANENTES [IR a ajustes/enlaces_permanentes->Guardar] para poder visualizarla<- Esto último refresca el htaccess para poder visualizar
 //Finalmente, pasar al front-page y agregar instrucciones para listar el custom post type a través de un custom loop.
 
+
+//Código propio para registrar la taxonomía
 function pg_register_tax(){
     $args= array(
         'hierarchical' => true,
@@ -113,10 +115,14 @@ function pg_register_tax(){
             'slug'=>'categoria-productos'
         )
     );
-    register_taxonomy('categoria-productos', array('producto'), $args);
+    //El valor true para 'hierarchical' nos va a permitir crear subcategorías después
+    //''rewrite' indica cómo queremos que se reescribs la URL para una categoria de productos
+    //Función de wordpress para registrar taxonomía
+    register_taxonomy('categoria-productos', array('producto'), $args); //Primer argumento es el slug. El segundo argumento son los posttypes (En este caso solo le asignamos esta taxonomía al custom post type producto). El tercer argumento es el array de argumentos que recién se escribió
 }
 
-add_action('init','pg_register_tax');
+add_action('init','pg_register_tax'); //El hook para agregar la acción definida por la función anterior. El momento de agregarse la acción es en el init. 
+//Después de esto se pueden crear las categorías (los términos) del custom post type productos, también se pueden agregar al menú de navegación del sitio. Se deben REFRESCAR LOS ENLACES PERMANENTES [IR a ajustes/enlaces_permanentes->Guardar] para poder visualizar las páginas respectivas <- Esto último refresca el htaccess para poder visualizar
 
 add_action('wp_ajax_nopriv_pg_filtro_productos', 'pg_filtro_productos');
 add_action('wp_ajax_pg_filtro_productos', 'pg_filtro_productos');
